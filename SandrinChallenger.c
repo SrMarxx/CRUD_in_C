@@ -97,6 +97,10 @@ int main() {
                 gets(novo.nome);
                 *novo.nome = verifica_str(novo.nome);
                 fflush(stdin);
+                if(*novo.nome == NULL){
+                    printf("Contato nao adicionado.\n");
+                    break;
+                }
 
                 printf("\nDigite o numero do contato: ");
                 gets(novo.numero);
@@ -236,7 +240,7 @@ int main() {
                     break;
 
                 case '2':
-                    printf("\nTem certeza que deseja excluir %s da sua lista de contatos?(s ou n) ", b->nome);
+                    printf("\n\nTem certeza que deseja excluir %s da sua lista de contatos?(s ou n) \n\nDigite: ", b->nome);
                     mesmo = getche();
 
                     while (mesmo != 's' && mesmo != 'S' && mesmo != 'n' && mesmo != 'N') {
@@ -431,9 +435,25 @@ int compara(char n[MAX_STR], char m[MAX_STR]){
 }
 
 Contato* excluir(Contato* a, Contato* b){
-    if (estaVazia(b->cima)){
+    if (estaVazia(b->cima) && estaVazia(b->esq) && estaVazia(b->dir)){
         free(b);
         return NULL;
+    }
+    else if(a == b){
+        if(!estaVazia(a->dir)){
+            Contato* c = a->dir;
+            readd(c, c->dir);
+            readd(c, a->esq);
+            free(a);
+            return c;
+        }
+        else{
+            Contato* c = a->esq;
+            readd(c, c->esq);
+            readd(c, a->dir);
+            free(a);
+            return c;
+        }
     }
     else if (estaVazia(b->esq) && estaVazia(b->dir)){
         Contato* c = b->cima;
