@@ -96,9 +96,9 @@ int main() {
                 printf("\nDigite o nome do contato: ");
                 gets(novo.nome);
                 *novo.nome = verifica_str(novo.nome);
-                fflush(stdin);
+
                 if(*novo.nome == NULL){
-                    printf("Contato nao adicionado.\n");
+                    printf("\n\nContato nao pode estar sem nome. \nContato nao adicionado.\n\n");
                     break;
                 }
 
@@ -151,7 +151,7 @@ int main() {
             }
             else{
                 printf("\n\nContato encontrado!\n\nNome: %s \nNumero: %s \nEmail: %s\n\n", b->nome, b->numero, b->email);
-                printf("\nO que deseja fazer? \n\n0. Sair \n1. Modificar \n2. Deletar \n\nDigite: ");
+                printf("\nO que deseja fazer? \n\n1. Modificar \n2. Deletar \n0. Sair \n\nDigite: ");
                 menu1 = getche();
 
                 while (menu1 != '0' && menu1 != '1' && menu1 != '2') {
@@ -174,7 +174,6 @@ int main() {
                     switch(menu2){
 
                     case '1':
-
                         {
                             Contato novo;
                             novo.nome = (char*) malloc(sizeof(char)*MAX_STR);
@@ -183,7 +182,11 @@ int main() {
                             printf("\nDigite o novo nome do contato: ");
                             gets(novo.nome);
                             *novo.nome = verifica_str(novo.nome);
-                            fflush(stdin);
+
+                            if(*novo.nome == NULL){
+                                printf("\n\nContato nao pode estar sem nome. \nContato nao modificado.\n\n");
+                                break;
+                            }
 
                             novo.numero = b->numero;
                             novo.email = b->email;
@@ -207,6 +210,11 @@ int main() {
 
                             *novo.numero = verifica_int(novo.numero);
 
+                            if(*novo.numero == NULL){
+                                printf("\n\nContato nao modificado.\n\n");
+                                break;
+                            }
+
                             b->numero = novo.numero;
 
                             system("cls");
@@ -223,6 +231,11 @@ int main() {
                             gets(novo.email);
 
                             *novo.email = verifica_email(novo.email);
+
+                            if(*novo.email == NULL){
+                                printf("\n\nContato nao modificado.\n\n");
+                                break;
+                            }
 
                             b->email = novo.email;
 
